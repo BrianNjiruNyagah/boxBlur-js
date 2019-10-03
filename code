@@ -1,0 +1,33 @@
+function boxBlur(image) {
+    //saves the average of a 3*3 matrix
+    var rowArray = [];
+    //saves the array of the average of the 3*3 matrix
+    var columnArray = [];
+    var count=0;
+    //confirms on how many 3*3 matrix average will be found
+    var checkRow = image[0].length-3;
+    //confirms on the size of the array of the 3*3 matrix averages will be obtained
+    var checkColumn = image.length-3;
+    
+    //loops collects the averages of the  3*3 matrix
+    while(checkColumn != -1){
+        //loop calculates the averages of the  3*3 matrix and stores them in an array
+        while(checkRow != -1){
+            for(var column = checkColumn;column != checkColumn+3;column++){
+                for(var row = checkRow;row != checkRow+3;row++){
+                    count +=  image[column][row];
+                }
+            }
+            rowArray.unshift(Math.trunc(count/9));
+            count = 0;
+            checkRow--;
+        }
+        columnArray.unshift(rowArray);
+        //reseting the rowArray ensures that the next 3*3 matrix to be collected 
+        //will be collected a fresh
+        rowArray = [];
+        checkRow = image[0].length-3;
+        checkColumn--;   
+    }
+    return columnArray;
+}
